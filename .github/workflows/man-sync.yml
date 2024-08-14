@@ -1,0 +1,35 @@
+name: Manual Sync Files on Merge
+on:
+  pull_request:
+    branches:
+      - main
+    types: [closed]
+  workflow_dispatch:
+jobs:
+  sync:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source repository
+        uses: actions/checkout@v4
+      - name: Checkout target repository
+        uses: actions/checkout@v4
+        with:
+          repository: larshinueber/foo-space
+          token: ${{ secrets.GH_PAT }}
+          ref: main
+          path: ./foo-space
+      - name: Commit and push changes
+        run: |
+          git config --global user.email "test@test.com"
+          git config --global user.name "Test User"
+
+          cp -r ./propagation/perturbed_satellite_orbit.py ./foo-space/docs/source/_src_getting_started/_src_examples/notebooks/propagation/
+
+          git checkout -b man-repo-sync
+
+          git add .
+          git commit -m "Auto-update foo-space examples"
+          git push --set-upstream origin man-repo-sync
+
+          gh pr create --title "Auto-update foo-space examples" --body "Please manually remove all non *.ipynp-files." --base main
