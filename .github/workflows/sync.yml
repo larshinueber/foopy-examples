@@ -19,5 +19,4 @@ jobs:
           PR_BODY: Please manually remove all non *.ipynp-files.
           COMMIT_BODY: "Auto-update tudat-space examples"
           REVIEWERS: larshinueber
-          DRY_RUN: true
           
