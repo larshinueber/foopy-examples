@@ -26,6 +26,7 @@ jobs:
 
           cp -r ./propagation/perturbed_satellite_orbit.py ./foo-space/docs/source/_src_getting_started/_src_examples/notebooks/propagation/
 
+          cd ./foo-space
           git checkout -b man-repo-sync
 
           git add .
