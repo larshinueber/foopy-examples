@@ -53,7 +53,7 @@ spice.load_standard_kernels()
 
 # Set simulation start and end epochs
 simulation_start_epoch = DateTime(2027, 1, 1).epoch()
-simulation_end_epoch = DateTime(2028, 1, 1).epoch()
+simulation_end_epoch = DateTime(2029, 1, 1).epoch()
 
 ## Environment setup
 """
