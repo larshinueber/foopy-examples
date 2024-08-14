@@ -18,5 +18,6 @@ jobs:
           GH_PAT: ${{ secrets.GH_PAT }}
           PR_BODY: Please manually remove all non *.ipynp-files.
           COMMIT_BODY: "Auto-update tudat-space examples"
-          REVIEWERS: larshinueber
+          # REVIEWERS: larshinueber
+          DRY_RUN: true
           
