@@ -24,9 +24,12 @@ jobs:
           git config --global user.email github-actions
           git config --global user.name github-actions@github.com
 
+          # TODO: generalized, sync all .ipynb files
           cp -r ./propagation/perturbed_satellite_orbit.py ./foo-space/docs/source/_src_getting_started/_src_examples/notebooks/propagation/
 
           cd ./foo-space
+
+          # TODO: how can multiple open PRs be handled?
           git checkout -b man-repo-sync
 
           git add .
