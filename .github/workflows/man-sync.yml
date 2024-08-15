@@ -71,21 +71,23 @@ jobs:
 
       - name: Push changes
         run: |
-
+      
           cd ./${{ env.TARGET_REPO }}
-
+      
           git config --global user.email github-actions
           git config --global user.name github-actions@github.com
-
+          
+          if [[(git diff --cached --numstat | wc -l) > 0 ]]; then 
           git add .
           git commit -m "Auto-update foo-space examples"
-          git push --set-upstream origin ${{ env.BRANCH_NAME }}
+          git push --set-upstream origin ${{ env.BRANCH_NAME }}; 
+          fi
 
       - name: Create PR
         if: github.event_name == 'pull_request'
         run: |
           gh pr create --title "Auto-update foo-space examples" --body "Please manually remove all non *.ipynp-files." --base main
-      
+
       - name:
         if: github.event_name == 'workflow_dispatch'
         run: |
