@@ -16,6 +16,8 @@ jobs:
   sync:
     # if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    env:
+      BRANCH_NAME: "${{ github.event_name }} == 'pull_request' && 'man-repo-sync-pr-${{ github.event.pull_request.number }}' || 'man-repo-sync-dispatch' "
     steps:
       - name: Checkout source repository
         uses: actions/checkout@v4
@@ -30,13 +32,21 @@ jobs:
         run: |
           cd ./${{ env.TARGET_REPO }}
           # TODO: how can multiple open PRs be handled?
-          git checkout -b man-repo-sync
 
-          # git pull --set-upstream origin man-repo-sync
+          echo ${{ env.BRANCH_NAME }}
+
+          git checkout -b ${{ env.BRANCH_NAME }}
+
+          # git pull --set-upstream origin ${{ env.BRANCH_NAME }}
 
           ls -la
 
           cd ..
+
+          # if: github.event_name == 'pull_request'
+          # BRANCH_NAME: "man-repo-sync-pr-${{ github.event.pull_request.number }}"
+          # if: github.event_name == 'workflow_dispatch'
+          # BRANCH_NAME: man-repo-sync-dispatch
 
       - name: Delete old files
         run: |
