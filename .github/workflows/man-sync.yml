@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BRANCH_NAME: man-repo-sync-${{ github.event_name  == 'pull_request' && github.event.pull_request.number || 'dispatch' }}
+      GH_TOKEN: ${{ secrets.GH_PAT }}
     steps:
       - name: Checkout source repository
         uses: actions/checkout@v4
@@ -79,6 +80,15 @@ jobs:
           git commit -m "Auto-update foo-space examples"
           git push --set-upstream origin ${{ env.BRANCH_NAME }}
 
+      - name: Create PR
+        if: github.event_name == 'pull_request'
+        run: |
           gh pr create --title "Auto-update foo-space examples" --body "Please manually remove all non *.ipynp-files." --base main
-        env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
+      
+      - name:
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          if [[ $(gh pr list -S head:man-repo-sync-dispatch --json title) == "[]" ]];
+          then gh pr create --title "Auto-update foo-space examples" --body "Please manually remove all non *.ipynp-files." --base main;
+          fi
+          
