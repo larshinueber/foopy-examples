@@ -90,11 +90,17 @@ jobs:
       - name: Create PR
         if: github.event_name == 'pull_request'
         run: |
+
+          cd ./${{ env.TARGET_REPO }}
+
           gh pr create --title "Auto-update foo-space examples" --body "Please manually remove all non *.ipynp-files." --base main
 
       - name:
         if: github.event_name == 'workflow_dispatch'
         run: |
+
+          cd ./${{ env.TARGET_REPO }}
+          
           git status
           if [[ $(gh pr list -S head:man-repo-sync-dispatch --json title) == "[]" ]];
           then gh pr create --title "Auto-update foo-space examples" --body "Please manually remove all non *.ipynp-files." --base main;
