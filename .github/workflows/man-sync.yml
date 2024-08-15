@@ -26,6 +26,14 @@ jobs:
           token: ${{ secrets.GH_PAT }}
           ref: main
           path: ./${{ env.TARGET_REPO }}
+      - name: Create new branch
+        run: |
+          cd ./${{ env.TARGET_REPO }}
+          # TODO: how can multiple open PRs be handled?
+          git checkout -b man-repo-sync
+
+          cd ..
+
       - name: Delete old files
         run: |
           rm -rf ${{ env.TARGET_DIR }}
@@ -47,13 +55,11 @@ jobs:
       - name: Push changes
         run: |
 
-          cd ./${{ env.TARGET_REPO }}
+
 
           git config --global user.email github-actions
           git config --global user.name github-actions@github.com
 
-          # TODO: how can multiple open PRs be handled?
-          git checkout -b man-repo-sync
 
           git add .
           git commit -m "Auto-update foo-space examples"
