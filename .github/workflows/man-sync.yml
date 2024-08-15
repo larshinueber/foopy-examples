@@ -38,7 +38,7 @@ jobs:
         run: |
 
           # TODO: generalized, sync all .ipynb files
-          python ${{github.action_path}}/../scripts/copy_files.py ${{ env.SOURCE_DIR }} ${{ env.TARGET_DIR }}
+          python .github/scripts/copy_files.py ${{ env.SOURCE_DIR }} ${{ env.TARGET_DIR }}
 
       - name: Push changes
         run: |
