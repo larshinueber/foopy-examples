@@ -77,7 +77,7 @@ jobs:
           git config --global user.email github-actions
           git config --global user.name github-actions@github.com
           
-          if [[(git diff --cached --numstat | wc -l) > 0 ]]; then 
+          if [[ $(git diff --cached --numstat | wc -l) > 0 ]]; then 
           git add .
           git commit -m "Auto-update foo-space examples"
           git push --set-upstream origin ${{ env.BRANCH_NAME }}; 
