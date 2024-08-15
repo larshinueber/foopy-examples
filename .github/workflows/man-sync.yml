@@ -42,7 +42,7 @@ jobs:
           echo ${{ github.workspace }}
 
           # TODO: generalized, sync all .ipynb files
-          python .github/scripts/copy_files.py ${{ env.SOURCE_DIR }} ${{ env.TARGET_DIR }}
+          python .github/scripts/copy_notebooks.py ${{ env.SOURCE_DIR }} ${{ env.TARGET_DIR }}
 
       - name: Push changes
         run: |
