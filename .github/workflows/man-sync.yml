@@ -77,11 +77,15 @@ jobs:
           git config --global user.email github-actions
           git config --global user.name github-actions@github.com
           
+          git status
+
           if [[ $(git diff --cached --numstat | wc -l) > 0 ]]; then 
           git add .
           git commit -m "Auto-update foo-space examples"
           git push --set-upstream origin ${{ env.BRANCH_NAME }}; 
           fi
+
+          git status
 
       - name: Create PR
         if: github.event_name == 'pull_request'
@@ -91,6 +95,7 @@ jobs:
       - name:
         if: github.event_name == 'workflow_dispatch'
         run: |
+          git status
           if [[ $(gh pr list -S head:man-repo-sync-dispatch --json title) == "[]" ]];
           then gh pr create --title "Auto-update foo-space examples" --body "Please manually remove all non *.ipynp-files." --base main;
           fi
