@@ -17,7 +17,7 @@ jobs:
     # if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     env:
-      BRANCH_NAME: ${{ github.event_name }} == 'pull_request' && 'man-repo-sync-pr-${{ github.event.pull_request.number }}' || 'man-repo-sync-dispatch'
+      BRANCH_NAME: man-repo-sync-${{ github.event_name  == 'pull_request' && github.event.pull_request.number || 'dispatch' }}
     steps:
       - name: Checkout source repository
         uses: actions/checkout@v4
@@ -77,7 +77,7 @@ jobs:
 
           git add .
           git commit -m "Auto-update foo-space examples"
-          git push --set-upstream origin man-repo-sync
+          git push --set-upstream origin ${{ env.BRANCH_NAME }}
 
           gh pr create --title "Auto-update foo-space examples" --body "Please manually remove all non *.ipynp-files." --base main
         env:
