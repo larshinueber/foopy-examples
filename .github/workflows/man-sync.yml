@@ -5,6 +5,13 @@ on:
       - main
     types: [closed]
   workflow_dispatch:
+
+env:
+  SOURCE_DIR: ./src/
+  TARGET_OWNER: larshinueber
+  TARGET_REPO: foo-space
+  TARGET_DIR: foo-space/docs/source/_src_getting_started/_src_examples/notebooks/
+
 jobs:
   sync:
     if: github.event.pull_request.merged == true
@@ -15,19 +22,31 @@ jobs:
       - name: Checkout target repository
         uses: actions/checkout@v4
         with:
-          repository: larshinueber/foo-space
+          repository: ${{ env.TARGET_REPO }}
           token: ${{ secrets.GH_PAT }}
           ref: main
-          path: ./foo-space
-      - name: Commit and push changes
+          path: ./${{ env.TARGET_REPO }}
+      - name: Delete old files
         run: |
-          git config --global user.email github-actions
-          git config --global user.name github-actions@github.com
+          rm -rf ${{ env.TARGET_DIR }}
+      
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+      - name: Copy new files
+        run: |
 
           # TODO: generalized, sync all .ipynb files
-          cp -r ./propagation/perturbed_satellite_orbit.py ./foo-space/docs/source/_src_getting_started/_src_examples/notebooks/propagation/
+          python .github/scripts/copy_files.py ${{ env.SOURCE_DIR }} ${{ env.TARGET_DIR }}
 
-          cd ./foo-space
+      - name: Push changes
+        run: |
+
+          cd ./${{ env.TARGET_REPO }}
+
+          git config --global user.email github-actions
+          git config --global user.name github-actions@github.com
 
           # TODO: how can multiple open PRs be handled?
           git checkout -b man-repo-sync
