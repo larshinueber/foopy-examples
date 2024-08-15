@@ -17,7 +17,7 @@ jobs:
     # if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     env:
-      BRANCH_NAME: "${{ github.event_name }} == 'pull_request' && 'man-repo-sync-pr-${{ github.event.pull_request.number }}' || 'man-repo-sync-dispatch' "
+      BRANCH_NAME: ${{ github.event_name }} == 'pull_request' && 'man-repo-sync-pr-${{ github.event.pull_request.number }}' || 'man-repo-sync-dispatch'
     steps:
       - name: Checkout source repository
         uses: actions/checkout@v4
