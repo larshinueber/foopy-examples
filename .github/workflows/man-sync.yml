@@ -32,6 +32,10 @@ jobs:
           # TODO: how can multiple open PRs be handled?
           git checkout -b man-repo-sync
 
+          git pull
+
+          ls -la
+
           cd ..
 
       - name: Delete old files
