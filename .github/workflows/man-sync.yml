@@ -38,7 +38,7 @@ jobs:
 
           git checkout -b ${{ env.BRANCH_NAME }}
 
-          # git pull --set-upstream origin ${{ env.BRANCH_NAME }}
+          git pull --set-upstream origin ${{ env.BRANCH_NAME }}
 
           ls -la
 
@@ -52,6 +52,8 @@ jobs:
       - name: Delete old files
         run: |
           rm -rf ${{ env.TARGET_DIR }}
+
+          ls -la
       
       - name: Setup Python
         uses: actions/setup-python@v2
@@ -74,7 +76,6 @@ jobs:
 
           git config --global user.email github-actions
           git config --global user.name github-actions@github.com
-
 
           git add .
           git commit -m "Auto-update foo-space examples"
