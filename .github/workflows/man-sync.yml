@@ -55,7 +55,7 @@ jobs:
       - name: Push changes
         run: |
 
-
+          cd ./${{ env.TARGET_REPO }}
 
           git config --global user.email github-actions
           git config --global user.name github-actions@github.com
