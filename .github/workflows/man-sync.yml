@@ -37,6 +37,8 @@ jobs:
       - name: Copy new files
         run: |
 
+          cd ..
+          
           echo ${{ github.workspace }}
 
           # TODO: generalized, sync all .ipynb files
