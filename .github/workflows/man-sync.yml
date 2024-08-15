@@ -32,7 +32,7 @@ jobs:
           # TODO: how can multiple open PRs be handled?
           git checkout -b man-repo-sync
 
-          git pull
+          git pull --set-upstream origin man-repo-sync
 
           ls -la
 
