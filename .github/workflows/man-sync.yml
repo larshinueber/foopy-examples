@@ -38,7 +38,11 @@ jobs:
 
           git checkout -b ${{ env.BRANCH_NAME }}
 
-          git pull --set-upstream origin ${{ env.BRANCH_NAME }}
+          if [[ $(git ls-remote --exit-code --heads origin) == 0 ]]; then
+          git pull --set-upstream origin ${{ env.BRANCH_NAME }};
+          else
+          git push --set-upstream origin ${{ env.BRANCH_NAME }};
+          fi
 
           ls -la
 
