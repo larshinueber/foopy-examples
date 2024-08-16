@@ -11,6 +11,8 @@ env:
   TARGET_OWNER: larshinueber
   TARGET_REPO: foo-space
   TARGET_DIR: foo-space/docs/source/_src_getting_started/_src_examples/notebooks/
+  USER_NAME: github-actions
+  USER_EMAIL: github-actions@github.com
 
 jobs:
   sync:
@@ -31,8 +33,11 @@ jobs:
           path: ./${{ env.TARGET_REPO }}
       - name: Create new branch
         run: |
-          cd ./${{ env.TARGET_REPO }}
+          # cd ./${{ env.TARGET_REPO }}
           # TODO: how can multiple open PRs be handled?
+
+          git config --global user.email ${{ env.USER_EMAIL }}
+          git config --global user.name ${{ env.USER_NAME }}
 
           echo ${{ env.BRANCH_NAME }}
 
@@ -52,13 +57,12 @@ jobs:
           # BRANCH_NAME: "man-repo-sync-pr-${{ github.event.pull_request.number }}"
           # if: github.event_name == 'workflow_dispatch'
           # BRANCH_NAME: man-repo-sync-dispatch
+        working-directory: ./${{ env.TARGET_REPO }}
 
       - name: Delete old files
         run: |
           rm -rf ${{ env.TARGET_DIR }}
 
-          ls -la
-      
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
@@ -66,47 +70,35 @@ jobs:
       - name: Copy new files
         run: |
 
-          # cd ..
-          
-          echo ${{ github.workspace }}
-
-          # TODO: generalized, sync all .ipynb files
           python .github/scripts/copy_notebooks.py ${{ env.SOURCE_DIR }} ${{ env.TARGET_DIR }}
 
       - name: Push changes
+        working-directory: ./${{ env.TARGET_REPO }}
         run: |
-      
-          cd ./${{ env.TARGET_REPO }}
-      
-          git config --global user.email github-actions
-          git config --global user.name github-actions@github.com
-          
-          git status
 
-          if [[ $(git diff --numstat | wc -l) > 0 ]]; then 
-          git add .
-          git commit -m "Auto-update foo-space examples"
-          git push --set-upstream origin ${{ env.BRANCH_NAME }}; 
-          fi
-
-          git status
+          bash .github/scripts/commit_and_push.sh ${{ env.TARGET_REPO }} ${{ env.BRANCH_NAME }}
 
       - name: Create PR
-        if: github.event_name == 'pull_request'
         run: |
+          bash .github/scripts/create_pr.sh ${{ env.TARGET_REPO }} ${{ env.BRANCH_NAME }}
 
-          cd ./${{ env.TARGET_REPO }}
+      # - name: Create PR
+      #   if: github.event_name == 'pull_request'
+      #   run: |
+      #     echo ${{ github.event.pull_request.additions }}
 
-          gh pr create --title "Auto-update foo-space examples" --body "Please manually remove all non *.ipynp-files." --base main
+      #     gh pr create --title "Auto-update foo-space examples" --body "Please manually remove all non *.ipynp-files." --base main
 
-      - name:
-        if: github.event_name == 'workflow_dispatch'
-        run: |
+      #   working-directory: ./${{ env.TARGET_REPO }}
 
-          cd ./${{ env.TARGET_REPO }}
-          
-          git status
-          if [[ $(gh pr list -S head:man-repo-sync-dispatch --json title) == "[]" ]];
-          then gh pr create --title "Auto-update foo-space examples" --body "Please manually remove all non *.ipynp-files." --base main;
-          fi
+      # - name:
+      #   if: github.event_name == 'workflow_dispatch'
+      #   run: |
+
+      #     git status
+      #     if [[ $(gh pr list -S head:man-repo-sync-dispatch --json title) == "[]" ]];
+      #     then gh pr create --title "Auto-update foo-space examples" --body "Please manually remove all non *.ipynp-files." --base main;
+      #     fi
+
+      #   working-directory: ./${{ env.TARGET_REPO }}
           
