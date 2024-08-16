@@ -75,7 +75,7 @@ jobs:
           python .github/scripts/copy_notebooks.py ${{ env.SOURCE_DIR }} ${{ env.TARGET_DIR }}
 
       - name: Push changes
-        working-directory: ./${{ env.TARGET_REPO }}
+        # working-directory: ./${{ env.TARGET_REPO }}
         run: |
 
           bash .github/scripts/commit_and_push.sh ${{ env.TARGET_REPO }} ${{ env.BRANCH_NAME }}
