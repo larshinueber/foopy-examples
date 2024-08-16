@@ -5,6 +5,7 @@ cd $TARGET_REPO
 
 git status
 
+# check if there are any changes
 if [[ $(git diff --numstat | wc -l) > 0 ]]; then 
 git add .
 git commit -m "Auto-update foo-space examples"
