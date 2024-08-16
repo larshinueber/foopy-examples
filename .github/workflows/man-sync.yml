@@ -33,7 +33,7 @@ jobs:
           path: ./${{ env.TARGET_REPO }}
       - name: Create new branch
         run: |
-          bash .github/scripts/create_branch.sh ${{ env.TARGET_REPO }} ${{ env.BRANCH_NAME }} ${{ env.USER_EMAIL }} ${{ env.USER_NAME }}
+          bash .github/scripts/checkout_branch.sh ${{ env.TARGET_REPO }} ${{ env.BRANCH_NAME }} ${{ env.USER_EMAIL }} ${{ env.USER_NAME }}
 
       - name: Delete old files
         run: |
