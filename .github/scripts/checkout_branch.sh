@@ -7,6 +7,7 @@ cd ./$TARGET_REPO
 
 git config user.email $USER_EMAIL
 git config user.name $USER_NAME
+git config pull.rebase false
 
 echo $BRANCH_NAME
 
