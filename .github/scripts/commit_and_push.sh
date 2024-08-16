@@ -5,6 +5,7 @@ cd $TARGET_REPO
 
 git status
 
+echo $(git diff --numstat)
 echo $(git diff --numstat | wc -l)
 
 # check if there are any changes
