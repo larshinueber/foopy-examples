@@ -5,6 +5,8 @@ cd $TARGET_REPO
 
 git status
 
+echo $(git diff --numstat | wc -l)
+
 # check if there are any changes
 if [[ $(git diff --numstat | wc -l) > 0 ]]; then 
 echo "Changes detected. Committing and pushing."
