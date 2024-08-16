@@ -5,6 +5,8 @@ cd $TARGET_REPO
 
 git status
 
+sleep 5
+
 echo $(git diff --numstat)
 echo $(git diff --numstat | wc -l)
 
