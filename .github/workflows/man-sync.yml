@@ -45,7 +45,7 @@ jobs:
 
           echo $(git ls-remote --exit-code --heads origin ${{ env.BRANCH_NAME }})
 
-          if [[ $(git ls-remote --exit-code --heads origin ${{ env.BRANCH_NAME }}) == 0 ]]; then
+          if [[ $(git ls-remote --heads origin ${{ env.BRANCH_NAME }}) ]]; then
           git pull --set-upstream origin ${{ env.BRANCH_NAME }};
           else
           git push --set-upstream origin ${{ env.BRANCH_NAME }};
