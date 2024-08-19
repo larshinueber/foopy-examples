@@ -33,7 +33,8 @@ jobs:
         #   path: ./${{ env.TARGET_REPO }}
       - name: Fetch new commits
         run: |
-            git submodule update --remote
+            git pull --recurse-submodules
+            git submodule update --remote --recursive
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
