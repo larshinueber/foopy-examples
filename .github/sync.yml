@@ -1,4 +1,0 @@
-larshinueber/foo-space:
-  - source: propagation/
-    dest: docs/source/_src_getting_started/_src_examples/notebooks/propagation/
-    deleteOrphaned: true
