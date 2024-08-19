@@ -29,7 +29,7 @@ jobs:
           repository: ${{ env.TARGET_OWNER }}/${{ env.TARGET_REPO }}
           token: ${{ secrets.GH_PAT }}
           ref: submodules
-          submodules: true
+        #   submodules: true
         #   path: ./${{ env.TARGET_REPO }}
       - name: Fetch new commits
         run: |
