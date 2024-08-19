@@ -41,9 +41,9 @@ jobs:
             # git pull
             # git status
             # git submodule foreach git pull
-            # git submodule update --init --recursive
-            # git submodule update --recursive --remote
-            git submodule update --remote
+            git submodule update --init --recursive
+            git submodule update --recursive --remote
+            # git submodule update --remote
             
 
       - name: Commit and push changes
