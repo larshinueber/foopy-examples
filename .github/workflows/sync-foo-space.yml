@@ -40,15 +40,16 @@ jobs:
             # git checkout -b submodules
             # git pull
             # git status
-            git submodule foreach git pull
-            git submodule update --init --recursive
-            git submodule update --recursive --remote
+            # git submodule foreach git pull
+            # git submodule update --init --recursive
+            # git submodule update --recursive --remote
+            git submodule update --remote
             
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Sync notebooks"
+          commit_message: "Sync submodule changes"
           
 
     #   - name: Create new branch
