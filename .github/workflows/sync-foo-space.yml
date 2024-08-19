@@ -9,7 +9,7 @@ env:
   SOURCE_DIR: ./src/
   TARGET_OWNER: larshinueber
   TARGET_REPO: foo-space
-  TARGET_DIR: foo-space/docs/source/_src_getting_started/_src_examples/notebooks/
+  TARGET_DIR: docs/source/_src_getting_started/_src_examples/notebooks/foopy-examples
   USER_NAME: github-actions
   USER_EMAIL: github-actions@github.com
 
@@ -31,11 +31,14 @@ jobs:
           ref: submodules
           submodules: true
         #   path: ./${{ env.TARGET_REPO }}
-    #   - name: Fetch new commits
-    #     run: |
+      - name: Fetch new commits
+        run: |
             # git pull --recurse-submodules
             # git submodule update --remote --recursive
             # git submodule update --remote
+            cd ${{ env.TARGET_DIR }}
+            git checkout -b submodules
+
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
