@@ -38,7 +38,8 @@ jobs:
             # git submodule update --remote
             cd ${{ env.TARGET_DIR }}
             # git checkout -b submodules
-            git pull
+            # git pull
+            git status
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
