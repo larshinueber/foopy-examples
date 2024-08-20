@@ -1,9 +1,9 @@
 name: Sync foo-space
 on:
-    push:
-      branches:
-        - submodules
-    workflow_dispatch:
+  push:
+    branches:
+      - submodules
+  workflow_dispatch:
 
 env:
   SOURCE_DIR: ./src/
