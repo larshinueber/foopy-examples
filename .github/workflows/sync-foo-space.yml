@@ -49,7 +49,7 @@ jobs:
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Sync submodule changes"
+          commit_message: "Update submodule to ${{ github.event.after }}"
           
 
     #   - name: Create new branch
